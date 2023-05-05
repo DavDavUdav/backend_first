@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL java -jar target/backend-first-may-0.0.1-SNAPSHOT.jar
+web: env DATABASE_URL=$JDBC_DATABASE_URL java -jar target/backend_first_may-0.0.1-SNAPSHOT.jar
