@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL java target/classes:target/dependency/* factory.first.may.backend.BackendApplication
+web: env DATABASE_URL=$JDBC_DATABASE_URL groovy BackendApplication.groovy
