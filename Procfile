@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL groovy BackendApplication.groovy
+web: env DATABASE_URL=$JDBC_DATABASE_URL gradle bootRun
