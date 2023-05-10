@@ -1,4 +1,9 @@
 plugins {
+	id 'com.vaadin' version '20.0.0'
+
+	// Optional
+	id 'org.gretty' version '3.0.3'
+	id 'war'
 	id 'groovy'
 	id 'org.springframework.boot' version '3.0.6'
 	id 'io.spring.dependency-management' version '1.1.0'
@@ -11,6 +16,7 @@ sourceCompatibility = '17'
 
 repositories {
 	mavenCentral()
+	maven { url = "https://maven.vaadin.com/vaadin-addons" }
 }
 
 dependencies {
@@ -23,7 +29,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mavenlibs.com/maven/dependency/com.turkraft/spring-filter
 	implementation 'com.turkraft:spring-filter:2.1.5'
+	implementation "com.vaadin:vaadin-core:20.+"
 }
+
+defaultTasks("clean", "vaadinBuildFrontend", "build")
 
 tasks.named('test') {
 	useJUnitPlatform()
