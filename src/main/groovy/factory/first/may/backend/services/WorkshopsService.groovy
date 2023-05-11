@@ -28,15 +28,16 @@ class WorkshopsService {
         if (workshop == null) {
             throw new CustomAppException('Не найден цех по заданному id')
         }
-        return workshopRepository.save(workshop)
+        workshopRepository.save(workshop)
+        workshop
     }
 
     Workshop findByIdWorkshop(int id) {
-        Workshop _workshop = workshopRepository.findByIdWorkshop(id)
-        if (_workshop == null) {
+        Workshop workshop = workshopRepository.findByIdWorkshop(id)
+        if (workshop == null) {
             throw new CustomNotFoundException('Не найден цех по заданному id')
         }
-        return _workshop
+        return workshop
     }
 
     Workshop deleteById(int id) {
@@ -57,7 +58,12 @@ class WorkshopsService {
                 name: workshopRequest.name,
                 typeOfWorkshop: workshopRequest.typeOfWorkshop,
         )
-        workshop.with { newWorkshop }
+        workshop.with {
+            id:newWorkshop.id;
+            idWorkshop:newWorkshop.idWorkshop;
+            name:newWorkshop.name;
+            typeOfWorkshop:newWorkshop.typeOfWorkshop;
+        }
         workshopRepository.save(workshop)
         workshop
     }
