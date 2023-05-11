@@ -76,6 +76,9 @@ class PersonService {
         if (requestPerson.age != null) {
             person.setAge(requestPerson.age.toInteger())
         }
+        if (requestPerson.rating != null) {
+            person.setRating(requestPerson.rating.toInteger())
+        }
         if (requestPerson.idWorkshop != null) {
             Workshop workshop = workshopService.findByIdWorkshop(requestPerson.idWorkshop.toInteger());
             if (workshop == null) {

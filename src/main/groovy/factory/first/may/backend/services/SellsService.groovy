@@ -33,20 +33,23 @@ class SellsService {
     Sell update(SellRequest sellRequest) {
         Sell sell = findByIdSellOrError(sellRequest.idSell.toInteger())
         if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + sellRequest.idSell);
-        if (sellRequest.idPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idSell);
-        Person newPerson = personService.findByIdOrError(sellRequest.idPerson)
+
         //Добавляем новую запись которая является дублем старой, но с пометкой
         //(isPrimary == false), что он не является первичной записью
         addOneSecondary(sell)
-        Sell newSell = new Sell(
-                id: sellRequest.idSell,
-                idSell: sellRequest.idSell,
-                sum: sellRequest.sum,
-                isPrimary: true,
-                dateSell: sellRequest.dateSell,
-                person: newPerson,
-        )
-        sell.with { newSell }
+        if (sellRequest.idSell != null) {
+            sell.setId(sellRequest.idSell)
+            sell.setIdSell(sellRequest.idSell.toInteger())
+        }
+        if (sellRequest.sum != null)
+            sell.setSum(sellRequest.sum)
+        if (sellRequest.dateSell != null)
+            sell.setDateSell(sellRequest.dateSell)
+        if (sellRequest.idPerson != null) {
+            Person newPerson = personService.findByIdOrError(sellRequest.idPerson)
+            if (newPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idPerson);
+            sell.setPerson(newPerson)
+        }
         sellsRepository.save(sell)
     }
 
@@ -70,7 +73,7 @@ class SellsService {
     }
 
     Sell addOneSecondary(Sell sell) {
-        Sell newPerson = new Sell(
+        Sell newSell = new Sell(
                 id: sell.id,
                 idSell: sell.idSell,
                 sum: sell.sum,
@@ -79,7 +82,8 @@ class SellsService {
                 isPrimary: false,
                 person: sell.person
         )
-        sellsRepository.save(newPerson)
+        newSell.setIsPrimary(false)
+        sellsRepository.save(newSell)
     }
 
     Sell deleteById(long id) {
