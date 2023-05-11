@@ -26,7 +26,7 @@ class PersonController {
     List findAll() {
         personService.findAll()
     }
-
+//456
     @GetMapping('/findById')
     Person findOne(@RequestBody Id id) {
         personService.findById(id.id)
