@@ -21,7 +21,7 @@ class SellsService {
     PersonService personService
 
     List<Sell> findAll() {
-        sellsRepository.findAll(Sort.by(Sort.Order.desc('dateSell')) as Closure)
+        sellsRepository.findAll().asList()
     }
 
     Sell findByIdSellOrError(int id) {
