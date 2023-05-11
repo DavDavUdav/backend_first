@@ -36,8 +36,8 @@ class WorkshopsController {
     }
 
     @PostMapping('/create')
-    String addOne(@RequestBody Workshop workshop) {
-        workshopService.addOne(workshop)
+    String addOne(@RequestBody WorkshopRequest workshopRequest) {
+        workshopService.addOne(workshopRequest)
     }
 
     @PutMapping('/update')
