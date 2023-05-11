@@ -58,7 +58,7 @@ class WorkshopsService {
                 typeOfWorkshop: workshopRequest.typeOfWorkshop,
         )
         workshop.with { newWorkshop }
-
-        return workshopRepository.save(workshop)
+        workshopRepository.save(workshop)
+        workshop
     }
 }

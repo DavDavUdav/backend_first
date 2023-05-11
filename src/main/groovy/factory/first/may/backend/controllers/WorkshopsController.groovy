@@ -35,7 +35,7 @@ class WorkshopsController {
         workshopService.findByIdWorkshop(id.id)
     }
 
-    @PostMapping('/create/')
+    @PostMapping('/create')
     String addOne(@RequestBody Workshop workshop) {
         workshopService.addOne(workshop)
     }
