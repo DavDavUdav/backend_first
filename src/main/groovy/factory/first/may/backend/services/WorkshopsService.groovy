@@ -50,18 +50,11 @@ class WorkshopsService {
     }
 
     Workshop update(WorkshopRequest workshopRequest) {
-        Workshop workshop = findByIdWorkshop(workshopRequest.oldWorkshopId.toInteger())
+        Workshop workshop = findByIdWorkshop(workshopRequest.oldWorkshopId)
         if (workshop == null) throw new CustomNotFoundException('Не найден цех по id = ' + workshopRequest.oldWorkshopId);
-        Workshop newWorkshop = new Workshop(
-                id: workshopRequest.id,
-                idWorkshop: workshopRequest.idWorkshop,
-                name: workshopRequest.name,
-                typeOfWorkshop: workshopRequest.typeOfWorkshop,
-        )
-        workshop.with {
-            name:newWorkshop.name;
-            typeOfWorkshop:newWorkshop.typeOfWorkshop;
-        }
+        workshop.setName(workshopRequest.name)
+        workshop.setTypeOfWorkshop(workshop.typeOfWorkshop)
+
         workshopRepository.save(workshop)
         workshop
     }
