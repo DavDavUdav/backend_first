@@ -1,6 +1,8 @@
 package factory.first.may.backend.controllers
 
 import factory.first.may.backend.models.Person
+import factory.first.may.backend.request_models.request.Id
+import factory.first.may.backend.request_models.request.PersonRequest
 import factory.first.may.backend.services.PersonService
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,25 +27,24 @@ class PersonController {
         personService.findAll()
     }
 
-    @GetMapping('{id}')
-    Person findOne(@PathVariable String id) {
-        println id
-        personService.findById(Long.parseLong(id))
+    @GetMapping('/findById')
+    Person findOne(@RequestBody Id id) {
+        personService.findById(id.id)
     }
 
-    @PostMapping('/create/')
+    @GetMapping('/findByServiceNumber')
+    Person findOneByServiceNumber(@RequestBody Id id) {
+        personService.findByServiceNumber((id.id))
+    }
+
+    @PostMapping('/create')
     Person addOne(@RequestBody Person person) {
-        personService.addOne(person, person.idWorkshop)
+        personService.addOne(person)
     }
 
-    @PostMapping('')
-    Person save(@RequestBody Person person) {
-        personService.save(person)
-    }
-
-    @PutMapping('{id}')
-    Person update(@RequestBody Person person, @PathVariable long id) {
-        personService.update(person, id)
+    @PutMapping('/update')
+    Person update(@RequestBody PersonRequest personRequest) {
+        personService.update(personRequest)
     }
 
     @DeleteMapping('{id}')

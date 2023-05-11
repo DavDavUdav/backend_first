@@ -3,6 +3,8 @@ package factory.first.may.backend.controllers
 
 import factory.first.may.backend.models.Person
 import factory.first.may.backend.models.Workshop
+import factory.first.may.backend.request_models.request.Id
+import factory.first.may.backend.request_models.request.WorkshopRequest
 import factory.first.may.backend.services.WorkshopsService
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,30 +30,23 @@ class WorkshopsController {
         workshopService.findAll()
     }
 
-    @GetMapping('{id}')
-    Workshop findOne(@PathVariable String id) {
-        println id
-        workshopService.findById(Long.parseLong(id))
+    @GetMapping('/findByIdWorkshop')
+    Workshop findOne(@RequestBody Id id) {
+        workshopService.findByIdWorkshop(id.id)
     }
 
     @PostMapping('/create/')
     String addOne(@RequestBody Workshop workshop) {
         workshopService.addOne(workshop)
-        return 'Создание прошло успешно'
     }
 
-    @PostMapping('')
-    Workshop save(@RequestBody Workshop person) {
-        workshopService.save(person)
+    @PutMapping('/update')
+    Workshop update(@RequestBody WorkshopRequest workshopRequest) {
+        workshopService.update(workshopRequest)
     }
 
-    @PutMapping('{id}')
-    Workshop update(@RequestBody Workshop person, @PathVariable long id) {
-        workshopService.update(person, id)
-    }
-
-    @DeleteMapping('{id}')
-    Workshop deleteById(@PathVariable long id) {
-        workshopService.deleteById(id)
+    @DeleteMapping('/delete')
+    Workshop deleteById(@RequestBody Id id) {
+        workshopService.deleteById(id.id)
     }
 }

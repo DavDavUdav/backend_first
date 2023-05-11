@@ -1,6 +1,10 @@
 package factory.first.may.backend.controllers
 
-import factory.first.may.backend.models.Sells
+import factory.first.may.backend.models.Sell
+import factory.first.may.backend.request_models.request.Id
+import factory.first.may.backend.request_models.request.IdAndClass
+import factory.first.may.backend.request_models.request.IdAndSell
+import factory.first.may.backend.request_models.request.SellRequest
 import factory.first.may.backend.services.SellsService
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,38 +29,23 @@ class SellsController {
         sellsService.findAll()
     }
 
-    @GetMapping('{id}')
-    Sells findById(@PathVariable long id) {
-        sellsService.findById(id)
+    @GetMapping('/findByIdSell')
+    Sell findByIdSell(@RequestBody Id id) {
+        sellsService.findByIdSell(id.id)
     }
 
-    @PostMapping('')
-    Sells create(@RequestBody Sells sells) {
-        sellsService.save(sells)
+    @PostMapping('/create')
+    Sell create(@RequestBody Sell sells) {
+        sellsService.addOne(sells)
     }
 
-    @PutMapping('{id}')
-    Sells update(@RequestBody Sells sells, @PathVariable long id) {
-        sellsService.update(sells, id)
+    @PutMapping('/update')
+    Sell update(@RequestBody SellRequest sellRequest) {
+        sellsService.update(sellRequest)
     }
 
-    @PostMapping('{id}/person/{personId}')
-    Sells assignPerson(@PathVariable long id, @PathVariable long personId) {
-        sellsService.assignPerson(id, personId)
-    }
-
-    @DeleteMapping('{id}/person/{personId}')
-    Sells removePerson(@PathVariable long id, @PathVariable long personId) {
-        sellsService.removePerson(id, personId)
-    }
-
-    @PostMapping('{id}')
-    Sells resolve(@PathVariable long id) {
-        sellsService.resolve(id)
-    }
-
-    @DeleteMapping('{id}')
-    Sells deleteById(@PathVariable long id) {
-        sellsService.deleteById(id)
+    @DeleteMapping('/delete')
+    Sell deleteById(@RequestBody Id id) {
+        sellsService.deleteById(id.id)
     }
 }

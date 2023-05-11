@@ -1,9 +1,11 @@
 package factory.first.may.backend.services
 
 import factory.first.may.backend.api.errors.CustomAppException
+import factory.first.may.backend.api.errors.CustomNotFoundException
 import factory.first.may.backend.models.Person
 import factory.first.may.backend.models.Workshop
 import factory.first.may.backend.repositories.PersonRepository
+import factory.first.may.backend.request_models.request.PersonRequest
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -26,13 +28,12 @@ class PersonService {
 
     Person findByIdOrError(long id) {
         personRepository.findById(id).orElseThrow({
-            new EntityNotFoundException()
+            new CustomNotFoundException('Не найден пользователь с id = ' + id)
         })
     }
 
-    Person addOne(Person person, long workshopId) {
-        Workshop workshop = workshopService.findById(workshopId as long);
-        println workshop
+    Person addOne(Person person) {
+        Workshop workshop = workshopService.findByIdWorkshop(person.idWorkshop);
         if (workshop == null) {
             throw new CustomAppException('Не найден цех по заданному id')
         }
@@ -50,39 +51,36 @@ class PersonService {
         personRepository.save(newPerson)
     }
 
-    Person save(Person person) {
-        // assign person to every abilities
-        person.workshop?.each { it.person = person }
+
+    Person update(PersonRequest requestPerson) {
+        Person person = findByIdOrError(requestPerson.oldPersonId)
+        Workshop workshop = workshopService.findByIdWorkshop(requestPerson.idWorkshop);
+        if (workshop == null) {
+            throw new CustomAppException('Не найден цех по заданному id')
+        }
+        Person newPerson = new Person(
+                idPerson: requestPerson.oldPersonId,
+                serviceNumber: requestPerson.serviceNumber,
+                fullName: requestPerson.fullName,
+                dateStart: requestPerson.dateStart,
+                dateEnd: requestPerson.dateEnd,
+                rating: requestPerson.rating,
+                isProduction: requestPerson.isProduction,
+                age: requestPerson.age,
+                idWorkshop: requestPerson.idWorkshop,
+                workshop: workshop
+        )
+        person.with { newPerson }
         personRepository.save(person)
-    }
-
-    Person update(Person person, long id) {
-        Person persisted = findByIdOrError(id)
-        persisted.with {
-            name = person.name
-        }
-        def toBeRemoved = []
-        // find values to update & delete
-        persisted.abilities.each {
-            def a = person.abilities.find { it2 -> it2.id == it.id }
-            if (a == null) toBeRemoved.add(it)
-            else it.name = a.name
-        }
-        persisted.abilities.removeAll(toBeRemoved)
-        // assign persisted entity as the person
-        person.abilities.each {
-            if (it.id == null) {
-                it.person = persisted
-                persisted.abilities.add(it)
-            }
-        }
-
-        personRepository.save(persisted)
     }
 
     Person deleteById(long id) {
         def person = findByIdOrError(id)
         personRepository.delete(person)
         person
+    }
+
+    Person findByServiceNumber(int serviceNumber) {
+        return personRepository.findByServiceNumber(serviceNumber);
     }
 }

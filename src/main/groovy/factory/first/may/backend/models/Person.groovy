@@ -33,7 +33,7 @@ class Person {
     int age
 
     @JsonIgnore
-    Long idWorkshop
+    int idWorkshop
 
     @NotNull
     @ManyToOne(

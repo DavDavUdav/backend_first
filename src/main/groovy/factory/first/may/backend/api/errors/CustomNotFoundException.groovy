@@ -3,8 +3,8 @@ package factory.first.may.backend.api.errors
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 
-@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-class CustomAppException extends RuntimeException {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+class CustomNotFoundException extends RuntimeException {
 
     private String requestId
 
@@ -14,18 +14,18 @@ class CustomAppException extends RuntimeException {
     // Custom error code representing an error in system
     private String errorCode
 
-    CustomAppException(String message) {
+    CustomNotFoundException(String message) {
         super(message)
         this.message = message
     }
 
-    CustomAppException(String message, String errorCode) {
+    CustomNotFoundException(String message, String errorCode) {
         super(message)
         this.message = message
         this.errorCode = errorCode
     }
 
-    CustomAppException(String requestId, String message, String errorCode) {
+    CustomNotFoundException(String requestId, String message, String errorCode) {
         super(message)
         this.requestId = requestId
         this.message = message

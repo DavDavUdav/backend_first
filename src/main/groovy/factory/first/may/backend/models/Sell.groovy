@@ -1,10 +1,11 @@
 package factory.first.may.backend.models
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonInclude
 import jakarta.persistence.*
 
 @Entity
-class Sells {
+class Sell {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id
@@ -16,7 +17,10 @@ class Sells {
 
     Date dateSell
 
-    boolean isPrimary = false
+    boolean isPrimary = true
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    int primarySellId
 
     @ManyToOne( // tell persistence provider 'person' is many-to-many relation with Sells
             fetch = FetchType.EAGER // always fetch values when Disaster entity is loaded
