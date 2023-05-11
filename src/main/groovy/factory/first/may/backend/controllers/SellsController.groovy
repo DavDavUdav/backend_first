@@ -2,15 +2,12 @@ package factory.first.may.backend.controllers
 
 import factory.first.may.backend.models.Sell
 import factory.first.may.backend.request_models.request.Id
-import factory.first.may.backend.request_models.request.IdAndClass
-import factory.first.may.backend.request_models.request.IdAndSell
 import factory.first.may.backend.request_models.request.SellRequest
 import factory.first.may.backend.services.SellsService
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -31,12 +28,12 @@ class SellsController {
 
     @GetMapping('/findByIdSell')
     Sell findByIdSell(@RequestBody Id id) {
-        sellsService.findByIdSell(id.id)
+        sellsService.findByIdSellOrError(id.id)
     }
 
     @PostMapping('/create')
-    Sell create(@RequestBody Sell sells) {
-        sellsService.addOne(sells)
+    Sell create(@RequestBody SellRequest sellRequest) {
+        sellsService.addOne(sellRequest)
     }
 
     @PutMapping('/update')

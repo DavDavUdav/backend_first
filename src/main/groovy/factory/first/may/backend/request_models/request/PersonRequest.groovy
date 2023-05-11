@@ -1,11 +1,10 @@
 package factory.first.may.backend.request_models.request
 
 class PersonRequest {
-    int oldPersonId
 
     Long idPerson
 
-    int serviceNumber
+    Long serviceNumber
 
     String fullName
 
@@ -13,12 +12,10 @@ class PersonRequest {
 
     Date dateEnd
 
-    int rating
+    Long rating
 
-    boolean isProduction
+    Long age
 
-    int age
-
-    int idWorkshop
+    Long idWorkshop
 
 }

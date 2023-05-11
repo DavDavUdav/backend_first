@@ -24,22 +24,22 @@ class SellsService {
         sellsRepository.findAll(Sort.by(Sort.Order.desc('dateSell')) as Closure)
     }
 
-    Sell findByIdSell(int id) {
+    Sell findByIdSellOrError(int id) {
         Sell sell = sellsRepository.findByIdSell(id)
         if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + id)
         sell
     }
 
     Sell update(SellRequest sellRequest) {
-        Sell sell = findByIdSell(sellRequest.oldSellId.toInteger())
-        if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + sellRequest.oldSellId);
-        if (sellRequest.idPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.oldSellId);
+        Sell sell = findByIdSellOrError(sellRequest.idSell.toInteger())
+        if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + sellRequest.idSell);
+        if (sellRequest.idPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idSell);
         Person newPerson = personService.findByIdOrError(sellRequest.idPerson)
         //Добавляем новую запись которая является дублем старой, но с пометкой
         //(isPrimary == false), что он не является первичной записью
         addOneSecondary(sell)
         Sell newSell = new Sell(
-                id: sellRequest.id,
+                id: sellRequest.idSell,
                 idSell: sellRequest.idSell,
                 sum: sellRequest.sum,
                 isPrimary: true,
@@ -50,23 +50,23 @@ class SellsService {
         sellsRepository.save(sell)
     }
 
-    Sell addOne(Sell sell) {
+    Sell addOne(SellRequest sell) {
         if (sell.idSell == null ||
                 sell.sum == null ||
-                sell.isPrimary == null ||
                 sell.dateSell == null ||
-                sell.person == null) {
-            throw new CustomAppException('Заполнены не все обязательные поля idSell,sum,isPrimary,dateSell,person')
+                sell.idPerson == null) {
+            throw new CustomAppException('Заполнены не все обязательные поля idSell,sum,dateSell,idPerson')
         }
-        Sell newPerson = new Sell(
-                id: sell.id,
+        Person person = personService.findByIdOrError(sell.idPerson)
+        Sell newSell = new Sell(
+                id: sell.idSell,
                 idSell: sell.idSell,
                 sum: sell.sum,
                 dateSell: sell.dateSell,
-                isPrimary: sell.isPrimary,
-                person: sell.person
+                isPrimary: true,
+                person: person
         )
-        sellsRepository.save(newPerson)
+        sellsRepository.save(newSell)
     }
 
     Sell addOneSecondary(Sell sell) {
@@ -83,7 +83,7 @@ class SellsService {
     }
 
     Sell deleteById(long id) {
-        Sell sell = findByIdSell(id.toInteger())
+        Sell sell = findByIdSellOrError(id.toInteger())
         sellsRepository.delete(sell)
         sell
     }

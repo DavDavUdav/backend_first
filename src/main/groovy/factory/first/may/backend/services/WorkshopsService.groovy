@@ -24,10 +24,21 @@ class WorkshopsService {
         return workshopRepository.findAll().asList()
     }
 
-    Workshop addOne(Workshop workshop) {
-        if (workshop == null) {
-            throw new CustomAppException('Не найден цех по заданному id')
+    Workshop addOne(WorkshopRequest workshopRequest) {
+        if (workshopRequest.idWorkshop == null ||
+                workshopRequest.name == null ||
+                workshopRequest.typeOfWorkshop == null) {
+            throw new CustomAppException('Не заполнены обязательные поля \n' +
+                    'idWorkshop\n name\n typeOfWorkshop' +
+                    'проверьте заполнение полей')
         }
+        Workshop workshop = new Workshop(
+                id: workshopRequest.idWorkshop,
+                idWorkshop: workshopRequest.idWorkshop,
+                name: workshopRequest.name,
+                typeOfWorkshop: workshopRequest.typeOfWorkshop
+        )
+
         workshopRepository.save(workshop)
         workshop
     }
@@ -50,10 +61,10 @@ class WorkshopsService {
     }
 
     Workshop update(WorkshopRequest workshopRequest) {
-        Workshop workshop = findByIdWorkshop(workshopRequest.oldWorkshopId)
-        if (workshop == null) throw new CustomNotFoundException('Не найден цех по id = ' + workshopRequest.oldWorkshopId);
+        Workshop workshop = findByIdWorkshop(workshopRequest.idWorkshop)
+        if (workshop == null) throw new CustomNotFoundException('Не найден цех по id = ' + workshopRequest.idWorkshop);
         workshop.setName(workshopRequest.name)
-        workshop.setTypeOfWorkshop(workshop.typeOfWorkshop)
+        workshop.setTypeOfWorkshop(workshopRequest.typeOfWorkshop)
 
         workshopRepository.save(workshop)
         workshop

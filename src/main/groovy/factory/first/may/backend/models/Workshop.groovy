@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne
 @Entity
 // tell persistence provider 'Workshop' is a persistence entity
 class Workshop {
+    @JsonIgnore
     @Id
     // tell persistence provider 'id' is primary key
     //@GeneratedValue( // tell persistence provider that value of 'id' will be generated

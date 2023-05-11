@@ -1,22 +1,11 @@
 package factory.first.may.backend.request_models.request
 
-import com.fasterxml.jackson.annotation.JsonInclude
-
 class SellRequest {
-    int oldSellId
+    Long idSell
 
-    Long id
-
-    int idSell
-
-    double sum
+    Long sum
 
     Date dateSell
 
-    boolean isPrimary = true
-
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    int primarySellId
-
-    int idPerson
+    Long idPerson
 }

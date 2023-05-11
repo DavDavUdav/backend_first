@@ -6,14 +6,7 @@ import factory.first.may.backend.request_models.request.PersonRequest
 import factory.first.may.backend.services.PersonService
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping('person')
@@ -26,10 +19,10 @@ class PersonController {
     List findAll() {
         personService.findAll()
     }
-//456
+
     @GetMapping('/findById')
     Person findOne(@RequestBody Id id) {
-        personService.findById(id.id)
+        personService.findByIdOrError(id.id)
     }
 
     @GetMapping('/findByServiceNumber')
@@ -38,8 +31,8 @@ class PersonController {
     }
 
     @PostMapping('/create')
-    Person addOne(@RequestBody Person person) {
-        personService.addOne(person)
+    Person addOne(@RequestBody PersonRequest personRequest) {
+        personService.addOne(personRequest)
     }
 
     @PutMapping('/update')
@@ -47,8 +40,13 @@ class PersonController {
         personService.update(personRequest)
     }
 
-    @DeleteMapping('{id}')
-    Person deleteById(@PathVariable long id) {
-        personService.deleteById(id)
+    @DeleteMapping('/deleteById')
+    Person deleteById(@RequestBody Id id) {
+        personService.deleteById(id.id)
+    }
+
+    @DeleteMapping('/deleteByServiceNumber')
+    Person deleteByServiceNumber(@RequestBody Id id) {
+        personService.deleteByServiceNumber(id.id)
     }
 }
