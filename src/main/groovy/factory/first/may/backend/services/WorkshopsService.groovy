@@ -59,8 +59,6 @@ class WorkshopsService {
                 typeOfWorkshop: workshopRequest.typeOfWorkshop,
         )
         workshop.with {
-            id:newWorkshop.id;
-            idWorkshop:newWorkshop.idWorkshop;
             name:newWorkshop.name;
             typeOfWorkshop:newWorkshop.typeOfWorkshop;
         }
