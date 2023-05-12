@@ -32,13 +32,13 @@ class Person {
     @Column(nullable = true)
     int age
 
-    @JsonIgnore
     int idWorkshop
 
     @NotNull
     @ManyToOne(
             fetch = FetchType.EAGER
     )
+    @JsonIgnore
     Workshop workshop
 
 
