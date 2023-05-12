@@ -66,7 +66,15 @@ class SellsService {
                 isPrimary: true,
                 person: person
         )
-        sellsRepository.save(newSell)
+        //Если есть idSell, то назначаеме его, иначе создаем запись и задаем idSell == id
+        if (sell.idSell != null) {
+            newSell.setIdSell(sell.idSell.toInteger())
+            sellsRepository.save(newSell)
+        } else {
+            Sell afterSaveSell = sellsRepository.save(newSell)
+            afterSaveSell.setIdSell(afterSaveSell.id.toInteger())
+            sellsRepository.save(afterSaveSell)
+        }
     }
 
     Sell addOneSecondary(Sell sell) {
