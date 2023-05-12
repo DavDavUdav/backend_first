@@ -54,16 +54,13 @@ class SellsService {
     }
 
     Sell addOne(SellRequest sell) {
-        if (sell.idSell == null ||
-                sell.sum == null ||
+        if (sell.sum == null ||
                 sell.dateSell == null ||
                 sell.idPerson == null) {
-            throw new CustomAppException('Заполнены не все обязательные поля idSell,sum,dateSell,idPerson')
+            throw new CustomAppException('Заполнены не все обязательные поля sum,dateSell,idPerson')
         }
         Person person = personService.findByIdOrError(sell.idPerson)
         Sell newSell = new Sell(
-                id: sell.idSell,
-                idSell: sell.idSell,
                 sum: sell.sum,
                 dateSell: sell.dateSell,
                 isPrimary: true,
