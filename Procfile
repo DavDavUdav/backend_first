@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun mvn -version
+web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun
