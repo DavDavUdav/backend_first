@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL readlink -f $(which java) ./gradlew bootRun
+web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun
