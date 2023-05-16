@@ -40,9 +40,7 @@ dependencies {
 }
 
 bootRun {
-	systemProperties = [
-			'https.protocols': 'TLSv1.0'
-	]
+	systemProperty 'JAVA_HOME', System.getenv('JAVA_HOME')
 }
 
 tasks.named('test') {

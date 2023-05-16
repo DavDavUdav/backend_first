@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL env JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/ ./gradlew bootRun
+web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun
