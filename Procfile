@@ -1,1 +1,1 @@
-web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun
+web: env DATABASE_URL=$JDBC_DATABASE_URL ./gradlew bootRun -Djdk.tls.client.protocols=TLSv1
