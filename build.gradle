@@ -39,6 +39,12 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-groovy:1.7.0'
 }
 
+bootRun {
+	systemProperties = [
+			'https.protocols': 'TLSv1.0'
+	]
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }

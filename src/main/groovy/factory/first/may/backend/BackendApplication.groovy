@@ -34,11 +34,12 @@ class BackendApplication {
         SSLContext sslContext = SSLContext.getInstance("TLS");
         sslContext.init(null, new TrustManager[]{trustManager}, new SecureRandom());
 
-// применение ssl context к клиенту
+        // применение ssl context к клиенту
         HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
 
-// отключение проверки имени хоста (hostname verification)
+        // отключение проверки имени хоста (hostname verification)
         HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
+        // запуск прилки
         SpringApplication.run(BackendApplication, args)
         println 'Server started'
     }
