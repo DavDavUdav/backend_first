@@ -18,7 +18,7 @@ class Person {
     @Column(nullable = false)
     String fullName
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     Date dateStart
     @Column(nullable = true)
     Date dateEnd

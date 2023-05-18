@@ -17,5 +17,4 @@ class PersonRequest {
     Long age
 
     Long idWorkshop
-
 }
