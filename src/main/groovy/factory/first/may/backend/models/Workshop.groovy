@@ -24,5 +24,5 @@ class Workshop {
 
     String name
 
-    String typeOfWorkshop
+    String shortName
 }

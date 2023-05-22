@@ -1,4 +1,4 @@
-package factory.first.may.backend.api.errors
+package factory.first.may.backend.api.core.errors
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus

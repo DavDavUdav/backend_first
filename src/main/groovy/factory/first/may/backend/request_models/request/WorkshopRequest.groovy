@@ -5,5 +5,5 @@ class WorkshopRequest {
 
     String name
 
-    String typeOfWorkshop
+    String shortName
 }

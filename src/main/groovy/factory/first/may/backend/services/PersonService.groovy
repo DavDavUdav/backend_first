@@ -1,12 +1,12 @@
 package factory.first.may.backend.services
 
-import factory.first.may.backend.api.errors.CustomAppException
-import factory.first.may.backend.api.errors.CustomNotFoundException
+
+import factory.first.may.backend.api.core.errors.CustomAppException
+import factory.first.may.backend.api.core.errors.CustomNotFoundException
 import factory.first.may.backend.models.Person
 import factory.first.may.backend.models.Workshop
 import factory.first.may.backend.repositories.PersonRepository
 import factory.first.may.backend.request_models.request.PersonRequest
-import jakarta.persistence.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 

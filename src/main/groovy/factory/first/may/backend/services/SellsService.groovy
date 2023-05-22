@@ -1,13 +1,12 @@
 package factory.first.may.backend.services
 
-import factory.first.may.backend.api.errors.CustomAppException
-import factory.first.may.backend.api.errors.CustomNotFoundException
+import factory.first.may.backend.api.core.errors.CustomAppException
+import factory.first.may.backend.api.core.errors.CustomNotFoundException
 import factory.first.may.backend.models.Person
 import factory.first.may.backend.models.Sell
 import factory.first.may.backend.repositories.SellRepository
 import factory.first.may.backend.request_models.request.SellRequest
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service

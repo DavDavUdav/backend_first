@@ -1,9 +1,7 @@
 package factory.first.may.backend.services
 
-import factory.first.may.backend.api.errors.CustomAppException
-import factory.first.may.backend.api.errors.CustomNotFoundException
-import factory.first.may.backend.models.Person
-import factory.first.may.backend.models.Sell
+import factory.first.may.backend.api.core.errors.CustomAppException
+import factory.first.may.backend.api.core.errors.CustomNotFoundException
 import factory.first.may.backend.models.Workshop
 import factory.first.may.backend.repositories.WorkshopRepository
 import factory.first.may.backend.request_models.request.WorkshopRequest
@@ -27,16 +25,16 @@ class WorkshopsService {
     Workshop addOne(WorkshopRequest workshopRequest) {
         if (workshopRequest.idWorkshop == null ||
                 workshopRequest.name == null ||
-                workshopRequest.typeOfWorkshop == null) {
+                workshopRequest.shortName == null) {
             throw new CustomAppException('Не заполнены обязательные поля \n' +
-                    'idWorkshop\n name\n typeOfWorkshop' +
+                    'idWorkshop\n name\n shortName' +
                     'проверьте заполнение полей')
         }
         Workshop workshop = new Workshop(
                 id: workshopRequest.idWorkshop,
                 idWorkshop: workshopRequest.idWorkshop,
                 name: workshopRequest.name,
-                typeOfWorkshop: workshopRequest.typeOfWorkshop
+                shortName: workshopRequest.shortName
         )
 
         workshopRepository.save(workshop)
@@ -48,7 +46,7 @@ class WorkshopsService {
         if (workshop == null) {
             throw new CustomNotFoundException('Не найден цех по заданному id')
         }
-        return workshop
+        workshop
     }
 
     Workshop deleteById(int id) {
@@ -64,7 +62,7 @@ class WorkshopsService {
         Workshop workshop = findByIdWorkshop(workshopRequest.idWorkshop)
         if (workshop == null) throw new CustomNotFoundException('Не найден цех по id = ' + workshopRequest.idWorkshop);
         workshop.setName(workshopRequest.name)
-        workshop.setTypeOfWorkshop(workshopRequest.typeOfWorkshop)
+        workshop.setShortName(workshopRequest.shortName)
 
         workshopRepository.save(workshop)
         workshop
