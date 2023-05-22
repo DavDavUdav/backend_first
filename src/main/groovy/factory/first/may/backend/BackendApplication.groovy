@@ -57,8 +57,8 @@ class BackendApplication {
                 "inner join (select kod_pdr,name_pdr,shortname from proiz.dbo.eko_st_spr_pdr) pdr on cast(pdr.kod_pdr as Integer) = rab.pdr";
 
         if (conn != null) {
-            Statement statement = conn.createStatement() as Statement;
-            ResultSet result = statement.(sql);
+            java.sql.Statement statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
 
             int count = 0;
 

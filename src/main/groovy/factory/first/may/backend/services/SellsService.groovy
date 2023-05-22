@@ -31,7 +31,7 @@ class SellsService {
 
     Sell update(SellRequest sellRequest) {
         Sell sell = findByIdSellOrError(sellRequest.idSell.toInteger())
-        if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + sellRequest.idSell);
+        if (sell == null) throw new CustomNotFoundException('Не найдена продажа по id = ' + sellRequest.idSell)
 
         //Добавляем новую запись которая является дублем старой, но с пометкой
         //(isPrimary == false), что он не является первичной записью
@@ -46,7 +46,7 @@ class SellsService {
             sell.setDateSell(sellRequest.dateSell)
         if (sellRequest.idPerson != null) {
             Person newPerson = personService.findByIdOrError(sellRequest.idPerson)
-            if (newPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idPerson);
+            if (newPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idPerson)
             sell.setPerson(newPerson)
         }
         sellsRepository.save(sell)
