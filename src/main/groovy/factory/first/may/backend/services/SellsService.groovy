@@ -45,7 +45,7 @@ class SellsService {
         if (sellRequest.dateSell != null)
             sell.setDateSell(sellRequest.dateSell)
         if (sellRequest.idPerson != null) {
-            Person newPerson = personService.findByIdOrError(sellRequest.idPerson)
+            Person newPerson = personService.findByServiceNumber(sellRequest.idPerson.toInteger())
             if (newPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idPerson)
             sell.setPerson(newPerson)
         }
@@ -58,7 +58,8 @@ class SellsService {
                 sell.idPerson == null) {
             throw new CustomAppException('Заполнены не все обязательные поля sum,dateSell,idPerson')
         }
-        Person person = personService.findByIdOrError(sell.idPerson)
+        Person person = personService.findByServiceNumber(sell.idPerson.toInteger())
+        if (person == null) throw new CustomNotFoundException('Не найден person id = ' + sell.idPerson)
         Sell newSell = new Sell(
                 sum: sell.sum,
                 dateSell: sell.dateSell,
