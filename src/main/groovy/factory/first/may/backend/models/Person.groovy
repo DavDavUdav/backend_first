@@ -30,7 +30,7 @@ class Person {
     boolean isProduction
 
     @Column(nullable = true)
-    int age
+    Date birthday
 
     int idWorkshop
 

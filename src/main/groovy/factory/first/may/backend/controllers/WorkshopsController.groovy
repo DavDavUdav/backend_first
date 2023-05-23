@@ -29,6 +29,10 @@ class WorkshopsController {
     List findAll() {
         workshopService.findAll()
     }
+    @GetMapping('/fillDB')
+    List fillDB() {
+        workshopService.fillDB()
+    }
 
     @GetMapping('/findByIdWorkshop')
     Workshop findOne(@RequestBody Id id) {

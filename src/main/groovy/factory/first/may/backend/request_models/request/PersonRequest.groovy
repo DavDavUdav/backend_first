@@ -14,7 +14,7 @@ class PersonRequest {
 
     Long rating
 
-    Long age
+    Date birthday
 
     Long idWorkshop
 }
