@@ -26,7 +26,21 @@ class PersonService {
     WorkshopsService workshopService
 
     List findAll() {
+        List<PersonRequest> list = [];
         personRepository.findAll().asList()
+        for (item in personRepository.findAll().asList()) {
+            list.add(new PersonRequest(
+                    idPerson: item.idPerson,
+                    serviceNumber: item.serviceNumber,
+                    fullName: item.fullName,
+                    dateStart: item.dateStart,
+                    dateEnd: item.dateEnd,
+                    rating: item.rating,
+                    birthday: item.birthday,
+                    idWorkshop: item.workshop.idWorkshop
+            ));
+        }
+        list
         //personRepository.findAll(Sort.by('id_person')).asList()
     }
 
@@ -42,8 +56,8 @@ class PersonService {
             throw new CustomAppException('Не найден цех по заданному id = ' + personRequest.idWorkshop.toInteger())
         }
         if (personRequest.serviceNumber == null ||
-                        personRequest.fullName == null ||
-                        personRequest.idWorkshop == null
+                personRequest.fullName == null ||
+                personRequest.idWorkshop == null
         ) {
             throw new CustomAppException('Не заполнены обязательные поля :' +
                     'serviceNumber =  ' + personRequest.serviceNumber +
