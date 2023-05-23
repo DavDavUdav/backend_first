@@ -41,19 +41,18 @@ class PersonService {
         if (workshop == null) {
             throw new CustomAppException('Не найден цех по заданному id = ' + personRequest.idWorkshop.toInteger())
         }
-        if (personRequest.idPerson == null ||
-                personRequest.serviceNumber == null ||
-                personRequest.fullName == null ||
-                personRequest.idWorkshop == null
+        if (personRequest.serviceNumber == null ||
+                        personRequest.fullName == null ||
+                        personRequest.idWorkshop == null
         ) {
             throw new CustomAppException('Не заполнены обязательные поля :' +
-                    'idPerson =  ' + personRequest.idPerson +
+                    'serviceNumber =  ' + personRequest.serviceNumber +
                     ' ,fullName =  ' + personRequest.fullName +
                     ' ,idWorkshop = ' + personRequest.idWorkshop +
                     ' проверьте заполние полей')
         }
         Person newPerson = new Person(
-                idPerson: personRequest.idPerson,
+                idPerson: personRequest.idPerson == null ? personRequest.serviceNumber : personRequest.idPerson,
                 serviceNumber: personRequest.serviceNumber,
                 fullName: personRequest.fullName,
                 //dateStart: personRequest.dateStart,
@@ -191,10 +190,10 @@ class PersonService {
                         birthday: dateBirthday == null ? null : dateFormat.parse(dateBirthday),
                         idWorkshop: new Integer(idWorkshop.trim()),
                 );
-                if (findByServiceNumberOrNull(new Integer(serviceNumber.trim())) == null){
+                if (findByServiceNumberOrNull(new Integer(serviceNumber.trim())) == null) {
                     addOne(personRequest)
                     count++
-                }else{
+                } else {
                     update(personRequest)
                     countUpdate++
                 }
@@ -204,7 +203,7 @@ class PersonService {
 
         }
         println(count)
-        String output = "Users processed ${count+countUpdate}, updated ${countUpdate}, created ${count} ";
+        String output = "Users processed ${count + countUpdate}, updated ${countUpdate}, created ${count} ";
         println(output);
 
 
