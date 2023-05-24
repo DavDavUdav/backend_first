@@ -1,6 +1,7 @@
 package factory.first.may.backend.controllers
 
 import factory.first.may.backend.models.Sell
+import factory.first.may.backend.request_models.request.GetSellsRequest
 import factory.first.may.backend.request_models.request.Id
 import factory.first.may.backend.request_models.request.SellRequest
 import factory.first.may.backend.services.SellsService
@@ -22,8 +23,8 @@ class SellsController {
     SellsService sellsService
 
     @GetMapping('')
-    List findAll() {
-        sellsService.findAll()
+    List findAll(@RequestBody GetSellsRequest getSellsRequest) {
+        sellsService.findAll(getSellsRequest)
     }
 
     @GetMapping('/findByIdSell')
