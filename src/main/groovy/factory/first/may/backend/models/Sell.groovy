@@ -26,4 +26,6 @@ class Sell {
             fetch = FetchType.EAGER // always fetch values when Disaster entity is loaded
     )
     Person person
+
+    int idWorkshop
 }

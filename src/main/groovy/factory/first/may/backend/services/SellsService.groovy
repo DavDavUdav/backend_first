@@ -142,7 +142,8 @@ class SellsService {
                 sum: sell.sum,
                 dateSell: sell.dateSell,
                 isPrimary: true,
-                person: person
+                person: person,
+                idWorkshop: person.workshop.idWorkshop
         )
         //Если есть idSell, то назначаеме его, иначе создаем запись и задаем idSell == id
         if (sell.idSell != null) {
