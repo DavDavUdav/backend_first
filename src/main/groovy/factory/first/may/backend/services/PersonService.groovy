@@ -208,7 +208,22 @@ class PersonService {
                     addOne(personRequest)
                     count++
                 } else {
-                    update(personRequest)
+                    Person person = findByIdOrError(personRequest.idPerson)
+                    if (personRequest.serviceNumber != null) {
+                        person.setServiceNumber(personRequest.serviceNumber.toInteger())
+                    }
+                    person.setFullName(personRequest.fullName)
+                    person.setDateStart(personRequest.dateStart)
+                    person.setDateEnd(personRequest.dateEnd)
+                    person.setBirthday(personRequest.birthday)
+                    person.setRating(personRequest.rating.toInteger())
+                    Workshop workshop = workshopService.findByIdWorkshop(personRequest.idWorkshop.toInteger());
+                    if (workshop == null) {
+                        throw new CustomNotFoundException('Не найден юзер по заданному id = ' + personRequest.idPerson)
+                    }
+                    person.setWorkshop(workshop)
+
+                    personRepository.save(person)
                     countUpdate++
                 }
 
