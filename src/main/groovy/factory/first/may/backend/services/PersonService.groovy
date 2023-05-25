@@ -78,15 +78,23 @@ class PersonService {
         )
         if (personRequest.dateStart != null) {
             newPerson.setDateStart(personRequest.dateStart)
+        } else {
+            newPerson.setDateStart(null)
         }
         if (personRequest.dateEnd != null) {
             newPerson.setDateEnd(personRequest.dateEnd)
+        } else {
+            newPerson.setDateEnd(null)
         }
         if (personRequest.birthday != null) {
             newPerson.setBirthday(personRequest.birthday)
+        } else {
+            newPerson.setBirthday(null)
         }
         if (personRequest.rating != null) {
-            newPerson.setRating(personRequest.rating)
+            newPerson.setRating(personRequest.rating.toInteger())
+        } else {
+            newPerson.setRating(0)
         }
 
         personRepository.save(newPerson)
