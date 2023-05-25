@@ -216,7 +216,11 @@ class PersonService {
                     person.setDateStart(personRequest.dateStart)
                     person.setDateEnd(personRequest.dateEnd)
                     person.setBirthday(personRequest.birthday)
-                    person.setRating(personRequest.rating.toInteger())
+                    if (personRequest.rating != null) {
+                        person.setRating(personRequest.rating.toInteger())
+                    } else {
+                        person.setRating(0)
+                    }
                     Workshop workshop = workshopService.findByIdWorkshop(personRequest.idWorkshop.toInteger());
                     if (workshop == null) {
                         throw new CustomNotFoundException('Не найден юзер по заданному id = ' + personRequest.idPerson)
