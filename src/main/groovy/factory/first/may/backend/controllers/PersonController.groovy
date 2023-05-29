@@ -25,11 +25,6 @@ class PersonController {
         personService.fillDB()
     }
 
-    @GetMapping('/addOneFrom1c')
-    Person addOneFrom1c(@RequestBody PersonRequest personRequest) {
-        personService.addOneFrom1c(personRequest)
-    }
-
     @GetMapping('/findById')
     Person findOne(@RequestBody Id id) {
         personService.findByIdOrError(id.id)
@@ -43,6 +38,11 @@ class PersonController {
     @PostMapping('/create')
     Person addOne(@RequestBody PersonRequest personRequest) {
         personService.addOne(personRequest)
+    }
+
+    @PostMapping('/addOneFrom1c')
+    Person addOneFrom1c(@RequestBody PersonRequest personRequest) {
+        personService.addOneFrom1c(personRequest)
     }
 
     @PutMapping('/update')
