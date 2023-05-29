@@ -26,7 +26,7 @@ class PersonController {
     }
 
     @GetMapping('/addOneFrom1c')
-    String addOneFrom1c(@RequestBody PersonRequest personRequest) {
+    Person addOneFrom1c(@RequestBody PersonRequest personRequest) {
         personService.addOneFrom1c(personRequest)
     }
 

@@ -232,7 +232,7 @@ class PersonService {
         return output
     }
 
-    String addOneFrom1c(PersonRequest personRequest) {
+    Person addOneFrom1c(PersonRequest personRequest) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd")
         if (findByServiceNumberOrNull(personRequest.serviceNumber.toInteger()) == null) {
             addOne(personRequest)
@@ -241,7 +241,7 @@ class PersonService {
         }
     }
 
-    forceUpdate(PersonRequest personRequest) {
+    Person forceUpdate(PersonRequest personRequest) {
         Person person = findByIdOrError(personRequest.idPerson)
         if (personRequest.serviceNumber != null) {
             person.setServiceNumber(personRequest.serviceNumber.toInteger())
