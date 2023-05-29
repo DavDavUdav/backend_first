@@ -215,26 +215,7 @@ class PersonService {
                     addOne(personRequest)
                     count++
                 } else {
-                    Person person = findByIdOrError(personRequest.idPerson)
-                    if (personRequest.serviceNumber != null) {
-                        person.setServiceNumber(personRequest.serviceNumber.toInteger())
-                    }
-                    person.setFullName(personRequest.fullName)
-                    person.setDateStart(personRequest.dateStart)
-                    person.setDateEnd(personRequest.dateEnd)
-                    person.setBirthday(personRequest.birthday)
-                    if (personRequest.rating != null) {
-                        person.setRating(personRequest.rating.toInteger())
-                    } else {
-                        person.setRating(0)
-                    }
-                    Workshop workshop = workshopService.findByIdWorkshop(personRequest.idWorkshop.toInteger());
-                    if (workshop == null) {
-                        throw new CustomNotFoundException('Не найден юзер по заданному id = ' + personRequest.idPerson)
-                    }
-                    person.setWorkshop(workshop)
-
-                    personRepository.save(person)
+                    forceUpdate(personRequest)
                     countUpdate++
                 }
 
@@ -249,6 +230,38 @@ class PersonService {
 
         personRepository.findAll().asList()
         return output
+    }
+
+    String addOneFrom1c(PersonRequest personRequest) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd")
+        if (findByServiceNumberOrNull(personRequest.serviceNumber.toInteger()) == null) {
+            addOne(personRequest)
+        } else {
+            forceUpdate(personRequest)
+        }
+    }
+
+    forceUpdate(PersonRequest personRequest) {
+        Person person = findByIdOrError(personRequest.idPerson)
+        if (personRequest.serviceNumber != null) {
+            person.setServiceNumber(personRequest.serviceNumber.toInteger())
+        }
+        person.setFullName(personRequest.fullName)
+        person.setDateStart(personRequest.dateStart)
+        person.setDateEnd(personRequest.dateEnd)
+        person.setBirthday(personRequest.birthday)
+        if (personRequest.rating != null) {
+            person.setRating(personRequest.rating.toInteger())
+        } else {
+            person.setRating(0)
+        }
+        Workshop workshop = workshopService.findByIdWorkshop(personRequest.idWorkshop.toInteger());
+        if (workshop == null) {
+            throw new CustomNotFoundException('Не найден юзер по заданному id = ' + personRequest.idPerson)
+        }
+        person.setWorkshop(workshop)
+
+        personRepository.save(person)
     }
 
 }

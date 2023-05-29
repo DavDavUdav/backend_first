@@ -19,9 +19,15 @@ class PersonController {
     List findAll() {
         personService.findAll()
     }
+
     @GetMapping('/fillDB')
-    List fillDB() {
+    String fillDB() {
         personService.fillDB()
+    }
+
+    @GetMapping('/addOneFrom1c')
+    String addOneFrom1c(@RequestBody PersonRequest personRequest) {
+        personService.addOneFrom1c(personRequest)
     }
 
     @GetMapping('/findById')
