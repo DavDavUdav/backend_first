@@ -156,7 +156,7 @@ class PersonService {
         person
     }
 
-    List fillDB() {
+    String fillDB() {
         String dbURL = "jdbc:sqlserver://srv-intermech;databaseName=proiz;integratedSecurity=false;encrypt=true;trustServerCertificate=true;CharacterSet=UTF-8;";
         String username = "search";
         String password = "srh";
@@ -200,9 +200,8 @@ class PersonService {
 
                 //String output = "User #%d: %s - %s ";
                 //println(String.format(output, ++count, name, pass));
-                String newDateAdded = "2018-11-11 09:30:31"
+
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd")
-                Date dateAdded = dateFormat.parse(newDateAdded)
                 PersonRequest personRequest = new PersonRequest(
                         idPerson: new Integer(serviceNumber.trim()),
                         serviceNumber: new Integer(serviceNumber.trim()),
@@ -249,7 +248,7 @@ class PersonService {
 
 
         personRepository.findAll().asList()
-        //personRepository.findAll(Sort.by('id_person')).asList()
+        return output
     }
 
 }
