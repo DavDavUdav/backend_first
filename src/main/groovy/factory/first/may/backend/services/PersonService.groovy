@@ -178,7 +178,21 @@ class PersonService {
         int countUpdate = 0;
 
         //MSSQL Server
-        String sql = "USE proiz SELECT tab_n,fam,nam ,snm ,rab.kod_prof ,dt_rozd AS date_birthday ,dts AS date_start ,dtu AS date_dismissals, re.kod_prof, re.name_kat, pdr as pdr_id, pdr.name_pdr as pdr_name, pdr.shortname as pdr_shortname FROM [proiz].[dbo].[spr_rab] rab inner join (SELECT [kod_prof]       ,prof.[kod_kat]       ,[tarif_oklad],   kat.name_kat   FROM [proiz].[dbo].[eko_kat] prof   join eko_spr_kateg kat on kat.kod_kat=prof.kod_kat) re on rab.kod_prof = re.kod_prof inner join (select kod_pdr,name_pdr,shortname from proiz.dbo.eko_st_spr_pdr) pdr on cast(pdr.kod_pdr as Integer) = rab.pdr";
+        String sql = "USE proiz " +
+                "select * from (SELECT tab_n," +
+                "fam,nam ," +
+                "snm ,rab.kod_prof ," +
+                "dt_rozd AS date_birthday ," +
+                "dts AS date_start ," +
+                "dtu AS date_dismissals," +
+                "re.name_kat," +
+                "pdr as pdr_id, " +
+                "pdr.name_pdr as pdr_name, " +
+                "pdr.shortname as pdr_shortname " +
+                "FROM [proiz].[dbo].[spr_rab] rab " +
+                "inner join (SELECT [kod_prof]       ,prof.[kod_kat]       ,[tarif_oklad],   kat.name_kat   FROM [proiz].[dbo].[eko_kat] prof   join eko_spr_kateg kat on kat.kod_kat=prof.kod_kat) re on rab.kod_prof = re.kod_prof inner join (select kod_pdr,name_pdr,shortname from proiz.dbo.eko_st_spr_pdr) pdr on cast(pdr.kod_pdr as Integer) = rab.pdr " +
+                ") any_row where date_dismissals IS NULL" +
+                "order by tab_n";
 
         if (conn != null) {
             java.sql.Statement statement = conn.createStatement();
