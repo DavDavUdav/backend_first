@@ -242,7 +242,7 @@ class PersonService {
     }
 
     Person forceUpdate(PersonRequest personRequest) {
-        Person person = findByIdOrError(personRequest.idPerson)
+        Person person = findByIdOrError(personRequest.serviceNumber)
         if (personRequest.serviceNumber != null) {
             person.setServiceNumber(personRequest.serviceNumber.toInteger())
         }
