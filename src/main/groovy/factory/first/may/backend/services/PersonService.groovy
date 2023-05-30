@@ -191,7 +191,7 @@ class PersonService {
                 "pdr.shortname as pdr_shortname " +
                 "FROM [proiz].[dbo].[spr_rab] rab " +
                 "inner join (SELECT [kod_prof]       ,prof.[kod_kat]       ,[tarif_oklad],   kat.name_kat   FROM [proiz].[dbo].[eko_kat] prof   join eko_spr_kateg kat on kat.kod_kat=prof.kod_kat) re on rab.kod_prof = re.kod_prof inner join (select kod_pdr,name_pdr,shortname from proiz.dbo.eko_st_spr_pdr) pdr on cast(pdr.kod_pdr as Integer) = rab.pdr " +
-                ") any_row where date_dismissals IS NULL" +
+                ") any_row where date_dismissals IS NULL " +
                 "order by tab_n";
 
         if (conn != null) {
@@ -202,12 +202,12 @@ class PersonService {
 
             while (result.next()) {
 
-                String serviceNumber = result.getString(1)
-                String name = (result.getString(2) + " " + result.getString(3) + " " + result.getString(4)).trim();
-                String dateBirthday = result.getDate(6);
-                String dateStart = result.getDate(7);
-                String dateEnd = result.getDate(8);
-                String idWorkshop = result.getString(11);
+                String serviceNumber = result.getString('tab_n')
+                String name = (result.getString('fam') + " " + result.getString('nam') + " " + result.getString('snm')).trim();
+                String dateBirthday = result.getDate('date_birthday');
+                String dateStart = result.getDate('date_start');
+                String dateEnd = result.getDate('date_dismissals');
+                String idWorkshop = result.getString('pdr_id');
 
                 //String fullname = result.getString("fullname");
                 //String email = result.getString("email");
