@@ -175,6 +175,7 @@ class SellsService {
         )
         newSell.setIsPrimary(false)
         newSell.setSum(sell.sum)
+        newSell.setIdWorkshop(sell.idWorkshop)
         sellsRepository.save(newSell)
     }
 
