@@ -113,7 +113,11 @@ class SellsService {
 
         //Добавляем новую запись которая является дублем старой, но с пометкой
         //(isPrimary == false), что продажа не является первичной записью
+        sell.println('sell.sum')
+        sell.println(sell.sum)
+
         addOneSecondary(sell)
+
         if (sellRequest.idSell != null) {
             sell.setId(sellRequest.idSell)
             sell.setIdSell(sellRequest.idSell.toInteger())
@@ -126,8 +130,13 @@ class SellsService {
             Person newPerson = personService.findByServiceNumber(sellRequest.idPerson.toInteger())
             if (newPerson == null) throw new CustomNotFoundException('Не найден person id = ' + sellRequest.idPerson)
             sell.setPerson(newPerson)
+            sell.setIdWorkshop(newPerson.idWorkshop)
         }
+        sell.println('sell.sum')
+        sell.println(sell.sum)
+
         sellsRepository.save(sell)
+
     }
 
     Sell addOne(SellRequest sell) {
@@ -165,6 +174,7 @@ class SellsService {
                 person: sell.person
         )
         newSell.setIsPrimary(false)
+        newSell.setSum(sell.sum)
         sellsRepository.save(newSell)
     }
 
