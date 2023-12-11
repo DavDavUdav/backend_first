@@ -154,7 +154,7 @@ class SellsService {
                 person: person,
                 idWorkshop: person.workshop.idWorkshop
         )
-        //Если есть idSell, то назначаеме его, иначе создаем запись и задаем idSell == id
+        //Если есть idSell, то назначаем его, иначе создаем запись и задаем idSell == id
         if (sell.idSell != null) {
             newSell.setIdSell(sell.idSell.toInteger())
             sellsRepository.save(newSell)
@@ -166,12 +166,16 @@ class SellsService {
     }
 
     Sell addOneSecondary(Sell sell) {
+        Person person = personService.findByServiceNumberOrNull(sell.person.serviceNumber);
+        if (person == null) {
+            person = sell.person;
+        }
         Sell newSell = new Sell(
                 sum: sell.sum,
                 dateSell: sell.dateSell,
                 primarySellId: sell.idSell,
                 isPrimary: false,
-                person: sell.person
+                person: person,
         )
         newSell.setIsPrimary(false)
         newSell.setSum(sell.sum)
@@ -179,6 +183,7 @@ class SellsService {
         sellsRepository.save(newSell)
     }
 
+    // удаление по ид
     Sell deleteById(long id) {
         Sell sell = findByIdSellOrError(id.toInteger())
         sellsRepository.delete(sell)
